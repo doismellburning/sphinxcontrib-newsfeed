@@ -90,7 +90,7 @@ class FeedEntryDirective(Directive):
         if date:
             meta_node += nodes.Text(' on ')
             date_node = nodes.emphasis(classes=['feed-date'])
-            if not date.time():
+            if date.time() == datetime.time():  # Check for zero time information
                 date_node += nodes.Text(date.date())
             else:
                 date_node += nodes.Text(date)
