@@ -23,6 +23,7 @@ class FeedDirective(Directive):
             'link': directives.unchanged,
             'description': directives.unchanged,
             'glob': directives.flag,
+            'reversed': directives.flag,
     }
 
     def run(self):
@@ -84,6 +85,9 @@ class FeedDirective(Directive):
             for entry in self.content:
                 if entry:
                     references.append(docname_join(env.docname, entry))
+
+        if "reversed" in self.options:
+            references = reversed(references)
 
         for docname in references:
             if docname not in env.found_docs:
