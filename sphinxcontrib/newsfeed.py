@@ -24,6 +24,7 @@ class FeedDirective(Directive):
             'description': directives.unchanged,
             'glob': directives.flag,
             'reversed': directives.flag,
+            'titlesonly': directives.flag,
     }
 
     def run(self):
@@ -52,6 +53,7 @@ class FeedDirective(Directive):
         subnode['title'] = self.options.get('title', '')
         subnode['link'] = self.options.get('link', '')
         subnode['description'] = self.options.get('description', '')
+        subnode['titlesonly'] = 'titlesonly' in self.options
         output.append(subnode)
 
         return output
@@ -298,7 +300,8 @@ def process_feed(app, doctree, fromdocname):
                         para_node += ref_node
                         section_node += para_node
                         break
-                    section_node += subnode.deepcopy()
+                    if not node["titlesonly"]:
+                        section_node += subnode.deepcopy()
                     if isinstance(subnode, entrymeta):
                         continue
                     rss_item_description += subnode.deepcopy()
