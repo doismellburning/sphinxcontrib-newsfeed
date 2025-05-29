@@ -78,7 +78,7 @@ class FeedEntryDirective(Directive):
             else:
                 break
         else:
-            return [doc.reporter.error("invalid date `%s`" % date,
+            return [self.reporter.error("invalid date `%s`" % date,
                                        lineno=self.lineno)]
         meta_node = entrymeta(classes=['feed-meta'])
         meta_node += nodes.Text('Published')
